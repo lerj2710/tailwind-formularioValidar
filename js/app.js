@@ -1,5 +1,6 @@
 //===== variables=====
 const btnEnviar = document.querySelector('#enviar');
+const formulario = document.querySelector('#enviar-mail');
 //variables de los campos
 const email = document.querySelector('#email');
 const asunto = document.querySelector('#asunto');
@@ -30,5 +31,19 @@ function validarFormulario(e){// validar que no este vacio el formulario
         e.target.classList.add('border-green-500','border');
     }else{
         e.target.classList.add('border-red-500','border');
+        mostrarError();
     }
+}
+
+//==== Mostrar mensaje Error===
+function mostrarError() {
+    const mensajeError = document.createElement('p');
+    mensajeError.textContent='todos los campos son obligatorio';
+    mensajeError.classList.add('border-red-500','border','background-red-100', 'text-red-500', 'text-center','p-3', 'mt-5','error');
+
+
+    const errores = document.querySelectorAll('.error');// el poder de javascritp ver como se esta ejecutando
+        if(errores.length === 0){//si hay un string vacio entonces
+            formulario.appendChild(mensajeError);// mostrar el error
+        }
 }
