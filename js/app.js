@@ -5,7 +5,8 @@ const formulario = document.querySelector('#enviar-mail');
 const email = document.querySelector('#email');
 const asunto = document.querySelector('#asunto');
 const mensaje = document.querySelector('#mensaje');
-
+    //expresion regular
+    const er = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 //====== evento =======
 eventListener();
 function eventListener() {
@@ -30,7 +31,9 @@ function validarFormulario(e){// validar que no este vacio el formulario
     if(e.target.value.length > 0){
         //  Elimina los errores
         const error = document.querySelector('p.error');
-            error.remove();
+        if(error){
+            error.remove(); 
+        }
         e.target.classList.remove('border-red-500','border');
         e.target.classList.add('border-green-500','border');
     }else{
@@ -40,12 +43,13 @@ function validarFormulario(e){// validar que no este vacio el formulario
             mostrarError('todos los campos son obligatorio');
     }
     if(e.target.type === 'email'){
-        //expresion regular
-        const er = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        // const resultado = e.target.value.indexOf('@'); //validacion regular
+            // const resultado = e.target.value.indexOf('@'); //validacion regular
         if(er.test(e.target.value)){            
-            const error = document.querySelector('p.error');
-               error.remove();
+             //  Elimina los errores
+                const error = document.querySelector('p.error');
+                if(error){
+                    error.remove(); 
+                };
             e.target.classList.remove('border-red-500','border');   
             e.target.classList.add('border-green-500','border');    
         }else{
@@ -53,6 +57,10 @@ function validarFormulario(e){// validar que no este vacio el formulario
             e.target.classList.add('border-red-500','border');
             mostrarError('Email no valido');;
         }
+    }
+    if (er.test(email.value) && asunto.value !== ''&& mensaje.value !== '') {
+        btnEnviar.disabled = false;
+        btnEnviar.classList.remove('cursor-not-allowed', 'opacity-50');
     }
 }
 
