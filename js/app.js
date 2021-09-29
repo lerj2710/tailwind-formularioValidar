@@ -1,5 +1,6 @@
 //===== variables=====
 const btnEnviar = document.querySelector('#enviar');
+const btnReset = document.querySelector('#resetBtn');
 const formulario = document.querySelector('#enviar-mail');
 //variables de los campos
 const email = document.querySelector('#email');
@@ -17,6 +18,11 @@ function eventListener() {
     email.addEventListener('blur', validarFormulario);// recoradar blur me funciona para cuando quiera salir de un formulario no este vacio
     asunto.addEventListener('blur', validarFormulario);// recoradar blur me funciona para cuando quiera salir de un formulario no este vacio
     mensaje.addEventListener('blur', validarFormulario);// recoradar blur me funciona para cuando quiera salir de un formulario no este vacio
+    //reiniciar btn
+    btnReset.addEventListener('click', resetearForm);
+    //enviar email
+    formulario.addEventListener('submit', enviarEmail);   
+
 }
 
 //======== funciones =========
@@ -76,3 +82,41 @@ function mostrarError(menssage) {
             formulario.appendChild(mensajeError);// mostrar el error
         }
 }
+
+//===== enviar email
+function enviarEmail(e) {
+    e.preventDefault();
+ 
+    //llamar de spiner
+    const spinner = document.querySelector('#spinner');
+    spinner.style.display = 'flex';
+
+
+    //quitar despues de 3 segundos
+    setTimeout(() => {
+        spinner.style.display = 'none';
+        // crear mensaje de envio
+        const parrafo = document.createElement('p');
+        parrafo.textContent= 'se envio correctamente'
+        parrafo.classList.add('text-center', 'bg-green-500','my-5', 'p-3','uppercase','font-bold', 'text-while');
+      //insertar el mensaje
+        formulario.insertBefore(parrafo, spinner) ;        
+       
+        setTimeout(() => {
+            parrafo.remove();
+            resetearForm();
+        }, 5000);
+    }, 3000);
+}
+// funcion que resetea el  formulario
+function resetearForm() {
+    formulario.reset();
+
+    iniciarApp();
+
+}
+// function resetearBoton() {
+//     formulario.reset();
+
+//     iniciarApp();
+// }
